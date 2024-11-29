@@ -1,0 +1,510 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/Parquetry.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/BrushedAluminium.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/humans/pedestrian/protos/Pedestrian.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/cabinet/protos/Cabinet.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/tables/protos/Table.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/living_room_furniture/protos/Armchair.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/VarnishedPine.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/PaintedWood.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/television/protos/Television.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/apartment_structure/protos/Wall.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/plants/protos/PottedTree.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/bedroom/protos/Bed.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/living_room_furniture/protos/Carpet.proto"
+
+WorldInfo {
+  info [
+    "Example use of an Emitter and a Receiver device."
+  ]
+  title "Emitter - Receiver"
+}
+Viewpoint {
+  orientation 0.614418735832514 -0.001186389669420917 -0.7889792199656005 3.144634950961342
+  position 2.3991969161398403 -0.5799001287978346 22.771797499402627
+}
+PointLight {
+  attenuation 0 0 2
+  intensity 16
+  location 3 -0.2 4
+}
+PointLight {
+  attenuation 0 0 2
+  intensity 16
+  location -4 -0.2 4
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+  texture "empty_office"
+}
+RectangleArena {
+  floorSize 11 6
+  floorAppearance Parquetry {
+    type "light strip"
+  }
+  wallThickness 0.1
+  wallHeight 1.6
+  wallAppearance BrushedAluminium {
+    textureTransform TextureTransform {
+      scale 3 1
+    }
+    IBLStrength 32
+  }
+}
+Table {
+  translation 1.23556 -1.32313 4.9738e-14
+  size 1 2.3 0.48
+  trayAppearance VarnishedPine {
+    colorOverride 0.2 0.2 0.2
+    textureTransform TextureTransform {
+      scale 10 10
+    }
+    IBLStrength 2
+  }
+}
+Armchair {
+  translation 0.0113326 -1.92317 0
+}
+Armchair {
+  translation 0 -0.63 0
+  name "armchair(1)"
+}
+Armchair {
+  translation 2.38448 -1.88629 1.77636e-15
+  rotation 0 0 1 3.14159
+  name "armchair(2)"
+}
+Armchair {
+  translation 2.38448 -0.64629 1.77636e-15
+  rotation 0 0 1 3.14159
+  name "armchair(3)"
+}
+DEF RECEIVER_BOT Robot {
+  translation 1.0853035060308034 1.1144227200111383 -0.0002270985930505759
+  rotation 0.013898236498862685 -0.21276012201136396 0.9770056138548701 0.13359632677277558
+  children [
+    DEF MAIN_BODY Pose {
+      translation 0 0 0.0415
+      rotation 0 0 1 1.570796
+      children [
+        Pedestrian {
+          translation 0 0 1.22
+          rotation 0 0 1 -1.5707953071795862
+        }
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.0820075 0.364731 0.8
+            transparency 1
+            roughness 1
+            metalness 0
+          }
+          geometry DEF BODY Cylinder {
+            height 0.08
+            radius 0.045
+          }
+        }
+      ]
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 77.89148378436589
+        axis 0 1 0
+        anchor 0 0 0.025
+      }
+      device [
+        RotationalMotor {
+          name "left wheel motor"
+          consumptionFactor 70
+          maxVelocity 100
+        }
+        PositionSensor {
+          name "left wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0 0.04499999999999963 0.025
+        rotation -0.6672828949204404 0.667282380979225 -0.3308591273960763 2.502548727587162
+        children [
+          DEF WHEEL Pose {
+            rotation 0.577656895078166 0.5771968951617173 -0.5771968951617173 -2.093935
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 1 0 0
+                  transparency 1
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.025
+                }
+              }
+            ]
+          }
+        ]
+        name "left wheel"
+        boundingObject USE WHEEL
+        physics DEF PHYSICS_WHEEL Physics {
+          density -1
+          mass 0.05
+        }
+        linearVelocity 0.1487157059275551 0.019523355413800337 -5.392779743118227e-07
+        angularVelocity -0.7809557427028437 5.94895493776604 0.00018615076035313343
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 67.52994888168035
+        axis 0 1 0
+        anchor 0 0 0.025
+      }
+      device [
+        RotationalMotor {
+          name "right wheel motor"
+          consumptionFactor 70
+          maxVelocity 100
+        }
+        PositionSensor {
+          name "right wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0 -0.044999999999999915 0.025
+        rotation -0.5548280290130303 0.5548279763355416 0.6199449773140544 4.25150454170491
+        children [
+          USE WHEEL
+        ]
+        name "right wheel"
+        boundingObject USE WHEEL
+        physics USE PHYSICS_WHEEL
+        linearVelocity 0.14873199584150976 0.0195241901825601 6.270923323370165e-07
+        angularVelocity -0.7809569301123758 5.948954792142654 0.000185163822513527
+      }
+    }
+    DEF LEFT_EYE DistanceSensor {
+      translation 0.042 0.02 0.063
+      rotation 0 0 -1 -0.499205
+      children [
+        DEF SENSOR Pose {
+          rotation 0.577656895078166 0.5771968951617173 -0.5771968951617173 -2.093935
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0.975691 0.981481 0.0252992
+                transparency 1
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.004
+                radius 0.008
+              }
+            }
+          ]
+        }
+      ]
+      name "ds0"
+      lookupTable [
+        0 1024 0
+        0.05 1024 0
+        0.15 0 0
+      ]
+      numberOfRays 2
+      aperture 1
+    }
+    DEF RIGHT_EYE DistanceSensor {
+      translation 0.042 -0.02 0.063
+      rotation 0 0 1 -0.500795
+      children [
+        USE SENSOR
+      ]
+      name "ds1"
+      lookupTable [
+        0 1024 0
+        0.05 1024 0
+        0.15 0 0
+      ]
+      numberOfRays 2
+      aperture 1
+    }
+    DEF SMILE Pose {
+      translation 0.036 0 0.025
+      rotation 0.25056300542381216 -0.9351130202419243 -0.25056300542381216 1.637834
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.721569 0.290196 0.290196
+            transparency 1
+            roughness 1
+            metalness 0
+          }
+          geometry Cylinder {
+            height 0.018
+            radius 0.009
+            subdivision 3
+          }
+        }
+      ]
+    }
+    DEF RECEIVER Receiver {
+      translation 0 0 -0.06
+      rotation 0 0.7071067811865476 0.7071067811865476 3.141527
+      type "infra-red"
+      channel 1
+    }
+  ]
+  name "MyBot receiver"
+  boundingObject DEF MYBOT_BOUNDING Pose {
+    translation 0 0 0.0415
+    rotation 0 0 1 1.570796
+    children [
+      USE BODY
+    ]
+  }
+  physics DEF MYBOT_PHYSICS Physics {
+    density -1
+    mass 0.5
+  }
+  controller "emitter_receiver"
+  linearVelocity 0.1487237726314739 0.01952391559013903 4.433641208839618e-08
+  angularVelocity -1.4068177922061136e-05 -5.47151513907841e-06 0.0001916186007633025
+}
+DEF EMITTER_BOT Robot {
+  translation 1.615719109904197 1.2793891700494664 -0.00022709761682154078
+  rotation 0.014231136077032004 -0.006324189934322646 0.9998787323408931 2.305353937969265
+  children [
+    DEF MAIN_BODY Pose {
+      translation 0 0 0.0415
+      rotation 0 0 1 1.570796
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.0820075 0.364731 0.8
+            roughness 1
+            metalness 0
+          }
+          geometry DEF BODY Cylinder {
+            height 0.08
+            radius 0.045
+          }
+        }
+      ]
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 88.68415527505236
+        axis 0 1 0
+        anchor 0 0 0.025
+      }
+      device [
+        RotationalMotor {
+          name "left wheel motor"
+          consumptionFactor 70
+          maxVelocity 100
+        }
+        PositionSensor {
+          name "left wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0 0.04499999999999922 0.025
+        rotation -0.21651981936592887 0.21651956915747927 -0.9519655687017283 1.6200035676700821
+        children [
+          DEF WHEEL Pose {
+            rotation 0.577656895078166 0.5771968951617173 -0.5771968951617173 -2.093935
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 1 0 0
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.01
+                  radius 0.025
+                }
+              }
+            ]
+          }
+        ]
+        name "left wheel"
+        boundingObject USE WHEEL
+        physics DEF PHYSICS_WHEEL Physics {
+          density -1
+          mass 0.05
+        }
+        linearVelocity -0.10052860581420757 0.11132804906850283 1.7236922644553962e-09
+        angularVelocity -4.453132110446163 -4.021154016286387 3.881527338378125e-06
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 104.1211317541405
+        axis 0 1 0
+        anchor 0 0 0.025
+      }
+      device [
+        RotationalMotor {
+          name "right wheel motor"
+          consumptionFactor 70
+          maxVelocity 100
+        }
+        PositionSensor {
+          name "right wheel sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0 -0.044999999999999866 0.025
+        rotation -0.6922133848769632 0.6922133223180238 0.20416009943821337 3.5443774993596655
+        children [
+          USE WHEEL
+        ]
+        name "right wheel"
+        boundingObject USE WHEEL
+        physics USE PHYSICS_WHEEL
+        linearVelocity -0.10052884693340758 0.11132827537355411 -1.4728092459391245e-07
+        angularVelocity -4.453131506641666 -4.021154709730949 2.9649344348950868e-06
+      }
+    }
+    DEF LEFT_EYE DistanceSensor {
+      translation 0.042 0.02 0.063
+      rotation 0 0 -1 -0.499205
+      children [
+        DEF SENSOR Pose {
+          rotation 0.577656895078166 0.5771968951617173 -0.5771968951617173 -2.093935
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0.975691 0.981481 0.0252992
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.004
+                radius 0.008
+              }
+            }
+          ]
+        }
+      ]
+      name "ds0"
+      lookupTable [
+        0 1024 0
+        0.05 1024 0
+        0.15 0 0
+      ]
+      numberOfRays 2
+      aperture 1
+    }
+    DEF RIGHT_EYE DistanceSensor {
+      translation 0.042 -0.02 0.063
+      rotation 0 0 1 -0.500795
+      children [
+        USE SENSOR
+      ]
+      name "ds1"
+      lookupTable [
+        0 1024 0
+        0.05 1024 0
+        0.15 0 0
+      ]
+      numberOfRays 2
+      aperture 1
+    }
+    USE SMILE
+    DEF EMITTER Emitter {
+      translation 0 0 -0.06
+      rotation 0 0.7071067811865476 0.7071067811865476 3.141527
+      children [
+        DEF RANGE Pose {
+          translation 0 0.05 0
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0.8 0.8 0.8
+                transparency 0.85
+                roughness 1
+                metalness 0
+              }
+              geometry Sphere {
+                radius 1.9
+                subdivision 2
+              }
+            }
+          ]
+        }
+      ]
+      type "infra-red"
+      range 2
+      maxRange 5
+      channel 1
+    }
+  ]
+  name "MyBot emitter"
+  boundingObject USE MYBOT_BOUNDING
+  physics USE MYBOT_PHYSICS
+  controller "emitter_receiver"
+  linearVelocity -0.10052875571726441 0.11132824773333332 -6.797986810619289e-08
+  angularVelocity -5.3751271118008826e-06 -2.18264706582876e-06 6.0417033921750645e-06
+}
+Cabinet {
+  hidden position_6_0 2.5425294074964085e-05
+  hidden translation_7 -5.0596335203727236e-06 -6.432132604317076e-11 0
+  hidden rotation_7 0 0 1 2.5425293779115067e-05
+  hidden position_10_0 -7.433883308094888e-05
+  hidden translation_11 -4.3270776225739085e-05 1.6083491205520772e-09 0
+  hidden rotation_11 0 0 -1 7.433883315752255e-05
+  hidden translation_15 0 0 0
+  hidden translation_23 0 0 0
+  hidden translation_31 0 0 0
+  hidden translation_39 0 0 0
+  translation 3.99332 -1.72627 -8.88178e-16
+  rotation 0 0 1 3.14159
+  columnsWidths [
+    0.4, 0.17, 1
+  ]
+  primaryAppearance PaintedWood {
+    colorOverride 0.298039 0.231373 0.180392
+  }
+}
+Cabinet {
+  hidden position_6_0 2.5425294074986636e-05
+  hidden translation_7 -5.059633520377209e-06 -6.432143706547322e-11 0
+  hidden rotation_7 0 0 1 2.5425293779115067e-05
+  hidden position_10_0 -7.433883308072451e-05
+  hidden translation_11 -4.327077622560846e-05 1.608349564641287e-09 0
+  hidden rotation_11 0 0 -1 7.433883315752255e-05
+  translation -5.45668 0.39373 -8.88178e-16
+  rotation 0 0 1 -5.307179586466759e-06
+  name "cabinet(1)"
+  columnsWidths [
+    0.4, 0.17, 1
+  ]
+  primaryAppearance PaintedWood {
+    colorOverride 0.298039 0.231373 0.180392
+  }
+}
+Television {
+  translation 1.22 -2.93 0.88
+  rotation 0 0 1 1.5708
+}
+Wall {
+  translation -1.45 -1 0
+  size 0.2 4 1.6
+}
+PottedTree {
+  translation -1.04 -2.62 0
+}
+Bed {
+  translation -4.37 -1.43 0
+}
+Carpet {
+  translation -2.42 -1.41 0
+  rotation 0 0 1 -1.5707953071795862
+}
